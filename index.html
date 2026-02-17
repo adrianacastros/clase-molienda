@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molienda - Ingeniería de Bioproducción</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        :root { --blue: #002d72; --gold: #a68966; --bg: #f4f7f6; --white: #ffffff; --text: #333; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; background: var(--bg); color: var(--text); }
+        
+        /* Navegación Sidebar */
+        nav { width: 320px; background: var(--blue); height: 100vh; position: fixed; color: white; overflow-y: auto; box-shadow: 4px 0 10px rgba(0,0,0,0.1); }
+        .nav-header { padding: 25px 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .docente-info { font-size: 0.85rem; opacity: 0.9; margin-top: 10px; line-height: 1.5; font-weight: normal; }
+        nav ul { list-style: none; padding: 20px 0; margin: 0; }
+        nav ul li { padding: 12px 25px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; }
+        nav ul li:hover, nav ul li.active { background: var(--gold); }
+
+        /* Contenido Principal */
+        main { margin-left: 320px; padding: 40px; width: calc(100% - 320px); max-width: 1100px; }
+        .section { display: none; animation: fadeIn 0.5s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { color: var(--blue); border-bottom: 4px solid var(--gold); padding-bottom: 10px; font-size: 2.2rem; margin-bottom: 30px; }
+        h2 { color: var(--blue); margin-top: 35px; border-left: 6px solid var(--gold); padding-left: 15px; background: white; padding: 10px; border-radius: 0 8px 8px 0; }
+        h3 { color: var(--blue); margin: 25px 0 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        
+        /* Tarjetas e Imágenes */
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; line-height: 1.6; }
+        .real-image { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: block; margin: 20px 0; }
+        
+        /* Botones YouTube */
+        .yt-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .yt-btn { display: inline-flex; align-items: center; gap: 8px; background: #ff0000; color: white; padding: 10px 18px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: 0.3s; font-size: 0.85rem; }
+        .yt-btn:hover { background: #cc0000; transform: translateY(-2px); }
+
+        /* Videos Locales */
+        .video-container { background: #000; border-radius: 12px; overflow: hidden; margin: 20px 0; border: 2px solid var(--gold); }
+        video { width: 100%; display: block; }
+
+        /* Tablas */
+        table { width: 100%; border-collapse: collapse; background: white; margin: 20px 0; border-radius: 8px; overflow: hidden; font-size: 0.9rem; }
+        th, td { padding: 15px; border: 1px solid #eee; text-align: left; }
+        th { background: var(--blue); color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+
+        /* Fórmulas */
+        .formula-box { background: #f0f4f8; border-left: 5px solid var(--blue); padding: 20px; border-radius: 0 8px 8px 0; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 1.1rem; color: #d63384; font-weight: bold; }
+        .term-list { list-style: none; padding: 0; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
+        .term-list li { margin-bottom: 8px; line-height: 1.4; }
+        .term-list strong { color: var(--blue); }
+
+        /* Actividad */
+        .activity-box { background: #fff; border: 2px solid var(--gold); border-radius: 12px; padding: 30px; margin-top: 20px; }
+        .product-item { background: #f0f4f8; padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 5px solid var(--blue); }
+
+        /* Glosario Corregido */
+        .glossary-card { background: white; padding: 20px; border-radius: 8px; border-bottom: 2px solid #eee; margin-bottom: 20px; line-height: 1.8; }
+        .glossary-card strong { color: var(--blue); font-size: 1.1rem; display: block; margin-bottom: 10px; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-header">
+        <i class="fas fa-industry fa-3x" style="color: var(--gold);"></i>
+        <h3 style="color:white; border:none; margin:15px 0 5px;">Molienda P1</h3>
+        <div class="docente-info">
+            Ingeniería de Bioproducción<br>
+            Operaciones Unitarias II<br>
+            <strong>Docente: Adriana Castro</strong>
+        </div>
+    </div>
+    <ul>
+        <li class="active" onclick="tab('inicio')"><i class="fas fa-home"></i> Fundamentos</li>
+        <li onclick="tab('mecanismos')"><i class="fas fa-cogs"></i> Mecanismos</li>
+        <li onclick="tab('rodillos')"><i class="fas fa-scroll"></i> Molinos de Rodillos</li>
+        <li onclick="tab('bolas_martillos')"><i class="fas fa-hammer"></i> Bolas y Martillos</li>
+        <li onclick="tab('pelado')"><i class="fas fa-apple-whole"></i> Pelado y Procesado</li>
+        <li onclick="tab('potencia')"><i class="fas fa-bolt"></i> Consumo de Potencia</li>
+        <li onclick="tab('ejemplo')"><i class="fas fa-calculator"></i> Ejemplo Práctico</li>
+        <li onclick="tab('glosario')"><i class="fas fa-book"></i> Glosario Técnico</li>
+        <li onclick="tab('actividad')"><i class="fas fa-pencil-alt"></i> Actividad de Clase</li>
+        <li onclick="tab('recursos')"><i class="fas fa-folder-open"></i> Recursos Adicionales</li>
+    </ul>
+</nav>
+
+<main>
+    <section id="inicio" class="section active">
+        <h1>Introducción a la Molienda</h1>
+        <div class="card">
+            <p>La molienda es la operación unitaria en la que se busca disminuir el tamaño de partícula de un sólido. La selección del equipo depende del tamaño del alimento, el grado de reducción deseado, las propiedades del material (dureza, tenacidad, estructura) y el contenido de humedad.</p>
+        </div>
+
+        <div class="card">
+            <h3>Molienda Seca vs Húmeda</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="background: #eef2f7; padding: 20px; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <h4 style="margin-top:0">Molienda en Seco</h4>
+                    <p>Reducción de tamaño del material sólido seguida de tamizado y clasificación.</p>
+                    <ul>
+                        <li>Genera más finos.</li>
+                        <li>Menor desgaste de molinos (sin corrosión).</li>
+                        <li>Ej: Maíz (separación de germen y pericarpio).</li>
+                    </ul>
+                </div>
+                <div style="background: #f2f7ee; padding: 20px; border-radius: 8px; border-left: 4px solid var(--gold);">
+                    <h4 style="margin-top:0">Molienda en Húmedo</h4>
+                    <p>Separa componentes en una serie de productos útiles.</p>
+                    <ul>
+                        <li>Menor consumo de energía por tonelada.</li>
+                        <li>Elimina polvo y ruido.</li>
+                        <li>Ej: Maíz para almidón, glucosa y maltodextrina.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="mecanismos" class="section">
+        <h1>Mecanismos de Ruptura</h1>
+        <div class="card">
+            <img src="mecanismos.png" alt="Mecanismos de Ruptura" class="real-image">
+            <img src="molinos_mecanismo.png" alt="Tabla de Molinos y Mecanismos" class="real-image">
+            <table>
+                <tr><th>Mecanismo</th><th>Descripción Física</th><th>Productos</th></tr>
+                <tr><td>Impacto</td><td>Fractura del sólido por una fuerza súbita.</td><td>Harinas, almidón.</td></tr>
+                <tr><td>Compresión</td><td>Desintegración a través de dos fuerzas.</td><td>Tubérculos, caña, piensos.</td></tr>
+                <tr><td>Cizalla</td><td>Corte del sólido por medio de cuchillas.</td><td>Frutas, verduras, carnes.</td></tr>
+                <tr><td>Atrición</td><td>Fricción entre sólidos o contra superficie.</td><td>Cereales, yuca.</td></tr>
+                <tr><td>Desgarre</td><td>Desintegración de partes constitutivas.</td><td>Hierbas, frutas.</td></tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="rodillos" class="section">
+        <h1>Molinos de Rodillos</h1>
+        <p>Operan bajo mecanismos de <strong>Impacto y Compresión</strong>.</p>
+
+        <div class="card">
+            <h3>Rodillos Lisos</h3>
+            <p>Utilizados para la reducción de tamaño de piensos, cereales y leguminosas. El tamaño de partícula obtenido suele oscilar entre <strong>1 a 26.5 mm</strong>.</p>
+            <div class="yt-grid"><a href="https://www.youtube.com/watch?v=Ayso8yo6nUA" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Video: Rodillos Lisos</a></div>
+        </div>
+
+        <div class="card">
+            <h3>Rodillos Corrugados (Pellets)</h3>
+            <p>Diseñados para procesar materia prima fibrosa como astilla, viruta y serrín de pino para la fabricación de pellets.</p>
+            <div class="yt-grid">
+                <a href="https://www.youtube.com/watch?v=MbEZJyv61Lg" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Corrugados 1</a>
+                <a href="https://www.youtube.com/watch?v=O9UBp7QEhk0" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Corrugados 2</a>
+                <a href="https://www.youtube.com/watch?v=mBFf32yGqVg" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Corrugado Simple</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Rodillos de Dientes (Shredlage)</h3>
+            <p>Tecnología Corncracker de rodillos dentados utilizada para el procesado de forrajes y pastos, permitiendo un desgarre eficiente de la fibra.</p>
+            <div class="yt-grid">
+                <a href="https://www.youtube.com/watch?v=8KGDaO1jxKk&t=276s" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Rodillo Dientes</a>
+                <a href="https://www.youtube.com/watch?v=4Cq63ak0Fmw" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Pellets de Pasto</a>
+                <a href="https://www.youtube.com/watch?v=3KDve94_c8s&t=298s" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Pellets de Alfalfa</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="bolas_martillos" class="section">
+        <h1>Equipos de Impacto</h1>
+        <div class="card">
+            <h3>Molino de Bolas</h3>
+            <p>Tambores que se llenan entre el 30% y 40% con bolas de acero. Las bolas se elevan e impactan el producto. Usa bolas pequeñas para moliendas finas y grandes para gruesas.</p>
+        </div>
+        <div class="card">
+            <h3>Molino de Martillos y Ultrafinos</h3>
+            <p>Fractura por impacto a alta velocidad. Los ultrafinos operan en rangos de 1-20 µm.</p>
+            <div class="yt-grid">
+                <a href="https://www.youtube.com/watch?v=OmkMcidZNsk" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Martillos</a>
+                <a href="https://www.youtube.com/watch?v=_x5mNRk3Wmk&t=1s" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Ultrafinos</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="pelado" class="section">
+        <h1>Pelado y Procesado</h1>
+        <div class="card">
+            <h2>Pelado Químico</h2>
+            <img src="pelado_quimico.png" alt="Esquema Pelado Químico" class="real-image" style="max-height: 400px; object-fit: contain;">
+            <p>Ataque químico y shock térmico con solución de sosa (NaOH). Variables: tiempo de inmersión, temperatura, concentración y madurez del producto.</p>
+            <a href="https://www.youtube.com/watch?v=MKOybDeNsMM" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Aplicación: Duraznos</a>
+        </div>
+        <div class="card">
+            <h3>Mecánico y Abrasión</h3>
+            <div class="yt-grid">
+                <a href="https://www.youtube.com/watch?v=Y4eFTlEsffM" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Peladora Mecánica</a>
+                <a href="https://www.youtube.com/watch?v=3oWPeljQir4" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Abrasión</a>
+                <a href="https://www.youtube.com/watch?v=liUneHj7wXk" target="_blank" class="yt-btn"><i class="fab fa-youtube"></i> Despulpadoras</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="potencia" class="section">
+        <h1>Consumo de Potencia</h1>
+        <div class="card">
+            <div class="formula-box">Ley de Bond: P / T = 0.3162 * Wi * (1/√Dep - 1/√Dea)</div>
+            <div class="formula-box">Ley de Rittinger: P / T = Kr * (1/Dmp - 1/Dma)</div>
+            <div class="formula-box">Ley de Kick: P / T = Ke * ln(Dma / Dmp)</div>
+            
+            <h3>Significado de los Términos:</h3>
+            <ul class="term-list">
+                <li><strong>P:</strong> Potencia requerida (kW).</li>
+                <li><strong>T:</strong> Velocidad de alimentación (Ton/h para Bond; Ton/min para Rittinger/Kick).</li>
+                <li><strong>Wi:</strong> Índice de Trabajo (Work Index).</li>
+                <li><strong>Dea / Dma:</strong> Diámetro medio de partícula en la alimentación (mm).</li>
+                <li><strong>Dep / Dmp:</strong> Diámetro medio de partícula en el producto (mm).</li>
+                <li><strong>Kr / Ke:</strong> Constantes de Rittinger y Kick respectivamente.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Tabla de Índices de Trabajo (Wi) - Trituración Seca</h3>
+            <table>
+                <tr><th>Material</th><th>Wi (kW.mm<sup>1/2</sup>/ton.h)</th></tr>
+                <tr><td>Arcilla</td><td>6,3</td></tr>
+                <tr><td>Piedra Caliza</td><td>12,74</td></tr>
+                <tr><td>Carbón</td><td>13,0</td></tr>
+                <tr><td>Granito</td><td>15,13</td></tr>
+                <tr><td>Roca Volcánica</td><td>19,32</td></tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="ejemplo" class="section">
+        <h1>Ejemplo Práctico: Piedra Caliza</h1>
+        <div class="card" style="border-left: 5px solid var(--blue);">
+            <h3>Enunciado</h3>
+            <p>¿Cuál es la potencia necesaria para triturar 10 ton/h de piedra caliza, si el 80% de la alimentación pasa por un tamiz de 2 plg (50.8 mm) y el 80% del producto pasa por un tamiz de 1/8 plg (3.175 mm)? Wi = 12.74.</p>
+        </div>
+        <div class="card" style="background: #fff8e1; border: 1px solid #ffe082;">
+            <h3>Solución (Ley de Bond)</h3>
+            <p><strong>P = 10 * 0.3162 * 12.74 * (1/√3.175 - 1/√50.8)</strong></p>
+            <p>P = 40.28 * (0.561 - 0.140) = <strong>16.95 kW</strong></p>
+        </div>
+    </section>
+
+    <section id="glosario" class="section">
+        <h1>Glosario Técnico</h1>
+        <div class="glossary-card"><strong>Potencia:</strong> Energía requerida por unidad de tiempo para realizar la reducción de tamaño.</div>
+        <div class="glossary-card"><strong>Tenacidad:</strong> Capacidad de un material para absorber energía y deformarse antes de romperse.</div>
+        <div class="glossary-card"><strong>Mecanismos de Funcionamiento:</strong> Principios físicos (impacto, compresión, atrición, cizalla y desgarre) aplicados para la ruptura del sólido.</div>
+        <div class="glossary-card"><strong>Molienda en Seco:</strong> Reducción de tamaño sin líquidos, favoreciendo la generación de polvos finos.</div>
+        <div class="glossary-card"><strong>Molienda en Húmedo:</strong> Reducción en presencia de líquido, eliminando polvo y reduciendo el ruido.</div>
+        <div class="glossary-card"><strong>Variables Operativas y de Diseño:</strong> Parámetros críticos como eficiencia de desintegración, consumo de potencia y velocidad crítica de giro.</div>
+        <div class="glossary-card"><strong>Relación de Reducción:</strong> Cociente entre el tamaño promedio de la alimentación y del producto.</div>
+        <div class="glossary-card"><strong>Índice de Trabajo (Wi):</strong> Parámetro que indica la resistencia de un material a la trituración.</div>
+    </section>
+
+    <section id="actividad" class="section">
+        <h1>Actividad: "Selecciona como Ingeniero"</h1>
+        <div class="activity-box">
+            <p><span style="font-size: 1.5rem;">🟢</span> <strong>Instrucciones:</strong> Para el producto asignado, determine el mecanismo de reducción, equipo o tecnología y una justificación técnica breve.</p>
+            <div class="product-item">🔸 <strong>1:</strong> Harina fina de maíz seco (250 µm). Producción industrial.</div>
+            <div class="product-item">🔸 <strong>2:</strong> Pasta de maní cremosa. Alto contenido de grasa.</div>
+            <div class="product-item">🔸 <strong>3:</strong> Polvo ultrafino de cúrcuma (≤20 µm). Sensible al calor.</div>
+            <div class="product-item">🔸 <strong>4:</strong> Cubos uniformes de zanahoria (5 mm). Mantener estructura.</div>
+            <div class="product-item">🔸 <strong>5:</strong> Sémola gruesa de trigo para pasta. Evitar finos.</div>
+        </div>
+    </section>
+
+    <section id="recursos" class="section">
+        <h1>Recursos Adicionales</h1>
+        <div class="card">
+            <h3>Video: Reducción de Tamaño</h3>
+            <div class="video-container">
+                <video controls>
+                    <source src="Reducción_de_Tamaño.mp4" type="video/mp4">
+                    Tu navegador no soporta el video.
+                </video>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Infografía: Resumen del Proceso</h3>
+            <img src="resumen.png" alt="Resumen General" class="real-image">
+        </div>
+    </section>
+</main>
+
+<script>
+    function tab(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('nav ul li').forEach(l => l.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.currentTarget.classList.add('active');
+        window.scrollTo(0,0);
+    }
+</script>
+
+</body>
+</html>
